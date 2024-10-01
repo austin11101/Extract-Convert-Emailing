@@ -37,11 +37,11 @@ $pdf->Cell(0, 10, 'System Daily Report', 0, 1, 'R');
 $pdf->SetFont('helvetica', '', 12);
 $pdf->Ln();
 
-$servername = getenv('DB_SERVER') ?: 'localhost';
-$username = getenv('DB_USER') ?: 'root';
-$password = getenv('DB_PASS') ?: 'Muxe@2001';
+$servername = getenv('DB_SERVER') ?: '*.*.*.*';
+$username = getenv('DB_USER') ?: '****';
+$password = getenv('DB_PASS') ?: '******';
 $database = getenv('DB_NAME') ?: 'readings';
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password, $database, port:3306, socket: '/opt/lampp/var/mysql/mysql.sock');
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
