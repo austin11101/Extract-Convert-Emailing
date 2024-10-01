@@ -34,9 +34,9 @@ $pdf->Cell(0, 10, 'System Daily Report', 0, 1, 'R');
 $pdf->SetFont('helvetica', '', 12);
 $pdf->Ln();
 
-$servername = getenv('DB_SERVER') ?: '*.*.*.*';
-$username = getenv('DB_USER') ?: '****';
-$password = getenv('DB_PASS') ?: '******';
+$servername = getenv('DB_SERVER') ?: '#';
+$username = getenv('DB_USER') ?: '*******';
+$password = getenv('DB_PASS') ?: '#######';
 $database = getenv('DB_NAME') ?: 'readings';
 $conn = new mysqli($servername, $username, $password, $database, port:3306, socket: '/opt/lampp/var/mysql/mysql.sock');
 
@@ -52,6 +52,8 @@ $tables = [
     "vibration_data",
     "water_data",
 ];
+
+$currentDate = date('Y-m-d'); 
 
 foreach ($tables as $table) {
     if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
@@ -80,13 +82,13 @@ foreach ($tables as $table) {
         continue; // Skip this table if neither 'Date' nor 'Data' columns are found
     }
 
-    // If we found a date column, proceed with the query for the 7th, 8th, 9th, or 10th day of any month
-    $sql = "SELECT * FROM `$table` WHERE DAY(`$dateColumn`) IN (7, 8, 9, 10)";
+    // If we found a date column, proceed with the query
+    $sql = "SELECT * FROM door_data WHERE DATE(Date) = '$currentDate'";
     $result = $conn->query($sql);
 
     if ($result === false || $result->num_rows == 0) {
-        echo "No results found for table '$table' on the 7th, 8th, 9th, or 10th.\n";
-        continue; // Skip if no data is found for these days
+        echo "No results found for table '$table' on date '$currentDate'.\n";
+        continue; // Skip if no data is found for the current date
     }
 
     $pdf->SetFont('helvetica', 'B', 20);
@@ -163,12 +165,12 @@ try {
     $mail->Host       = 'smtp.gmail.com'; 
     $mail->SMTPAuth   = true;
     $mail->addAttachment($filename); 
-    $mail->Username   = '******28@gmail.com'; 
-    $mail->Password   = '*********';  
+    $mail->Username   = '*******28@gmail.com'; 
+    $mail->Password   = '**********';  
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
-    $mail->Port       = ****; 
-    $mail->setFrom('*********28@gmail.com', 'Austin');
-    $mail->addAddress('*******567@gmail.com', 'Recipient Name');
+    $mail->Port       = 465; 
+    $mail->setFrom('********28@gmail.com', 'Austin');
+    $mail->addAddress('********567@gmail.com', 'Recipient Name');
 
     $mail->isHTML(true); 
     $mail->Subject = 'Daily Report PDF';
