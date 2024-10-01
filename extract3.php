@@ -165,12 +165,12 @@ try {
     $mail->Host       = 'smtp.gmail.com'; 
     $mail->SMTPAuth   = true;
     $mail->addAttachment($filename); 
-    $mail->Username   = 'austinbal28@gmail.com'; 
-    $mail->Password   = 'ukhh odze ohnu xttu';  
+    $mail->Username   = '******28@gmail.com'; 
+    $mail->Password   = '*********';  
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
-    $mail->Port       = 465; 
-    $mail->setFrom('austinbal28@gmail.com', 'Austin');
-    $mail->addAddress('baloyimuxe567@gmail.com', 'Recipient Name');
+    $mail->Port       = ****; 
+    $mail->setFrom('*********28@gmail.com', 'Austin');
+    $mail->addAddress('*******567@gmail.com', 'Recipient Name');
 
     $mail->isHTML(true); 
     $mail->Subject = 'Daily Report PDF';
